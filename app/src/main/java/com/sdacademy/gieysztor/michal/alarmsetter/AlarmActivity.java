@@ -36,12 +36,18 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.alarmActivityLayout)
-    public void stopSound() {
+    public void stopAlarm(){
+        stopSound();
+        onBackPressed();
+    }
+
+
+    private void stopSound() {
         if (ringtone.isPlaying() && ringtone!=null) {
             ringtone.stop();
-            onBackPressed();
         } else {
             Log.d(TAG, "Ringtone is null or not playing");
         }
     }
+    //uruchomienie wibracji
 }
