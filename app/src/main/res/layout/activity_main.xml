@@ -23,12 +23,12 @@
         android:text="confirm"
         />
 
-    <Button
-        android:id="@+id/mainActivityTestButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/mainActivityButton"
-        android:layout_centerInParent="true"
-        android:text="test alarm" />
+    <!--<Button-->
+        <!--android:id="@+id/mainActivityTestButton"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_above="@id/mainActivityButton"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:text="test alarm" />-->
 
 </RelativeLayout>
