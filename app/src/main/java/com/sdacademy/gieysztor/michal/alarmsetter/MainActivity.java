@@ -1,5 +1,8 @@
 package com.sdacademy.gieysztor.michal.alarmsetter;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +23,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    public static final String SETTINGS_DIALOG = "SettingsDialog";
+    private static final String SETTINGS_DIALOG = "SettingsDialog";
 
     @BindView(R.id.mainActivityTimePicker)
     TimePicker timePicker;
@@ -28,11 +31,14 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.mainActivityButton)
     Button confirmButton;
 
+    private AlarmManager alarmManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         timePicker.setIs24HourView(true);
     }
 
@@ -49,8 +55,15 @@ public class MainActivity extends AppCompatActivity {
         int minutes = getMinutes();
         int hour = getHour();
         setCalendar(calendar, minutes, hour);
+//
+//        Log.d(TAG, String.valueOf(calendar.getTimeInMillis()));
+        setAlarm(calendar);
+    }
 
-        Log.d(TAG, String.valueOf(calendar.getTimeInMillis()));
+    private void setAlarm(Calendar calendar) {
+        Intent startAlarmIntent = new Intent(this, AlarmActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, startAlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 
     private void setCalendar(Calendar calendar, int minutes, int hour) {
@@ -91,8 +104,17 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_item_settings:
                 openSettings();
                 break;
+            case R.id.menu_item_test_alarm:
+                openAlarm();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openAlarm() {
+        Intent alarmIntent = new Intent(this, AlarmActivity.class);
+        startActivity(alarmIntent);
+
     }
 
     private void openSettings() {

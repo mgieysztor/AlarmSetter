@@ -18,7 +18,13 @@
         </activity>
         <activity android:name=".SettingsActivity" />
         <activity android:name=".AlarmActivity"
+            android:exported="true"
             android:theme="@style/NoActionBar"/>
+        <receiver android:name=".BatteryBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

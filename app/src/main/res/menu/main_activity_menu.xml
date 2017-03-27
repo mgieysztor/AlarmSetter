@@ -8,6 +8,12 @@
         android:title="@string/settings"
         />
 
+    <item android:id="@+id/menu_item_test_alarm"
+        android:icon="@drawable/ic_test_button_24dp"
+        android:title="Alarm test"
+        app:showAsAction="always"
+        />
+
 
 
 </menu>

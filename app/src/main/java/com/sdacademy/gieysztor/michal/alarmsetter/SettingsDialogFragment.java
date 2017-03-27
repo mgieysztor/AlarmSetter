@@ -18,7 +18,7 @@ import butterknife.OnClick;
 public class SettingsDialogFragment extends DialogFragment {
     public static final String TAG = SettingsDialogFragment.class.getSimpleName();
     public static final String MINUTES_KEY = "minute";
-    private static final String TAG_SHARED_PREFERENCES = "alarm_shared_preferences";
+    public static final String TAG_SHARED_PREFERENCES = "alarm_shared_preferences";
     public static final String HOUR_KEY = "hour";
     private TimePicker timePicker;
     SharedPreferences sharedPreferences;
@@ -59,6 +59,7 @@ public class SettingsDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setView(view)
+                .setTitle(R.string.settings_dialog_title)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

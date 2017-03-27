@@ -2,6 +2,7 @@ package com.sdacademy.gieysztor.michal.alarmsetter;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -21,9 +22,10 @@ import butterknife.OnClick;
 public class AlarmActivity extends AppCompatActivity {
 
     public static final String TAG = AlarmActivity.class.getSimpleName();
-    private Ringtone ringtone;
+    private Ringtone ringtone1;
     private Vibrator vibrator;
     private Animation animation;
+    private MediaPlayer ringtone;
 
     @BindView(R.id.alarmActivityLayout)
     View mAlarmActivityLayout;
@@ -38,9 +40,28 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     private void setupRingtone() {
-        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-        ringtone = RingtoneManager.getRingtone(this, alarmUri);
-        ringtone.setStreamType(AudioManager.STREAM_ALARM);
+
+        Uri path =  Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.alarm);
+        ringtone = MediaPlayer.create(getApplicationContext(), path);
+        ringtone.setLooping(true);
+        ringtone.setVolume(1.0f, 1.0f);
+        setDeviceMaxVolume();
+
+
+
+//        RingtoneManager.setActualDefaultRingtoneUri(getApplicationContext(),
+//                RingtoneManager.TYPE_ALARM, path);
+//        ringtone = RingtoneManager.getRingtone(this, path);
+////        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+////        ringtone = RingtoneManager.getRingtone(this, alarmUri);
+//        ringtone.setStreamType(AudioManager.STREAM_ALARM);
+
+    }
+
+    private void setDeviceMaxVolume() {
+        AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),0);
     }
 
     private void startAlarm() {
@@ -51,7 +72,8 @@ public class AlarmActivity extends AppCompatActivity {
 
     private void startSound() {
         if (ringtone != null) {
-            ringtone.play();
+            ringtone.start();
+//            ringtone.play();
         }
     }
 
@@ -71,6 +93,7 @@ public class AlarmActivity extends AppCompatActivity {
         if (ringtone.isPlaying() && ringtone != null) {
             ringtone.stop();
         } else {
+
             Log.d(TAG, "Ringtone is null or not playing");
         }
     }
